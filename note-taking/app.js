@@ -1,3 +1,3 @@
-const utils = require('./utils');
+const message = require('./utils');
 
-const name = 'Mike Judge'
+console.log(message.message);
