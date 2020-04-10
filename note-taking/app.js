@@ -1,3 +1,4 @@
-const message = require('./utils');
+const utils = require('./utils');
+const sum = utils.add(4, 5);
 
-console.log(message.message);
+console.log(`Message: ${utils.message}, Sum: ${sum}`);

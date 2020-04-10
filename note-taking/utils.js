@@ -1,5 +1,8 @@
 const message = "Yo! NodeJS is awesome!!!";
 
+const add = (a, b) => a+b;
+
 module.exports = {
-    message
+    message,
+    add
 }
