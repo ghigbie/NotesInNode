@@ -36,8 +36,16 @@ const loadNotes = () =>{
         return [];
     }
 }
+const removeNote = (title) => {
+    let notes = loadNotes();
+    notes = notes.filter( note => {
+        note.title !== title
+    })
+    saveNotes(notes);
+}
 
 module.exports = {
     getNotes,
-    addNote
+    addNote,
+    removeNote
 }
