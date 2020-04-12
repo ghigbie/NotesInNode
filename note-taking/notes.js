@@ -1,58 +1,66 @@
-const fs = require('fs');
-const utils = require('./utils');
+const fs = require('fs')
+const chalk = require('chalk')
 
 const getNotes = () => {
-    return "Your notes...";
+    return 'Your notes...'
 }
 
 const addNote = (title, body) => {
-     const notes = loadNotes();
-     const duplicateNotes = notes.filter((note) => note.title === title)
-     if(duplicateNotes.length === 0){
+    const notes = loadNotes()
+    const duplicateNotes = notes.filter((note) => note.title === title)
+
+    if (duplicateNotes.length === 0) {
         notes.push({
-            title,
-            body
-        });
-        saveNotes(notes);
-        console.log(utils.green('New Note Addded!'));
-    }else{
-        console.log(utils.red(`The note title, "${title}" is already used.`));
-        console.log(utils.red(`Please choose a different note`));
-    }
-
-} 
-
-const removeNote = (title) => {
-    const notes = loadNotes();
-    const notesToKeep = notes.filter((note) => note.title !== title);
-
-    if(notes.length > notesToKeep.length){
-        console.log(utils.green(`Note ${title} was removed`))
-        saveNotes(notesToKeep);
-    }else{
-        console.log(utils.red('No note found'));
+            title: title,
+            body: body
+        })
+        saveNotes(notes)
+        console.log(chalk.green.inverse('New note added!'))
+    } else {
+        console.log(chalk.red.inverse('Note title taken!'))
     }
 }
 
-//function not exported
-const saveNotes = (notes) => {
-    const dataJSON = JSON.stringify(notes);
-    fs.writeFileSync("notes.json", dataJSON);
-};
+const removeNote = (title) => {
+    const notes = loadNotes()
+    const notesToKeep = notes.filter((note) => note.title !== title)
 
-//function not exported
+    if (notes.length > notesToKeep.length) {
+        console.log(chalk.green.inverse('Note removed!'))
+        saveNotes(notesToKeep)
+    } else {
+        console.log(chalk.red.inverse('No note found!'))
+    }    
+}
+
+const listNotes = () => {
+    const notes = loadNotes()
+
+    console.log(chalk.inverse('Your notes'))
+
+    notes.forEach((note) => {
+        console.log(note.title)
+    })
+}
+
+const saveNotes = (notes) => {
+    const dataJSON = JSON.stringify(notes)
+    fs.writeFileSync('notes.json', dataJSON)
+}
+
 const loadNotes = () => {
-  try {
-    const dataBuffer = fs.readFileSync("notes.json");
-    const dataJSON = dataBuffer.toString();
-    return JSON.parse(dataJSON);
-  } catch (e) {
-    return [];
-  }
-};
+    try {
+        const dataBuffer = fs.readFileSync('notes.json')
+        const dataJSON = dataBuffer.toString()
+        return JSON.parse(dataJSON)
+    } catch (e) {
+        return []
+    }
+}
 
 module.exports = {
-    getNotes,
-    addNote,
-    removeNote
+    getNotes: getNotes,
+    addNote: addNote,
+    removeNote: removeNote,
+    listNotes: listNotes
 }
