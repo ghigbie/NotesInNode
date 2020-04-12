@@ -1,4 +1,5 @@
 const fs = require('fs');
+const utils = require('./utils');
 
 const getNotes = () => {
     return "Your notes...";
@@ -6,17 +7,24 @@ const getNotes = () => {
 
 const addNote = (title, body) => {
      const notes = loadNotes();
-     notes.push({
-         title: title,
-         body: body
-     });
+     const duplicateNotes = notes.filter(note => note.title === title)
+     if(duplicateNotes.length === 0){
+        notes.push({
+            title,
+            body
+        });
+    }else{
+        console.log(utils.red(`The note title, "${title}" is already used.`));
+        console.log(utils.red(`Please choose a different note <title className=""></title>`));
+    }
      console.log('Adding note!');
      console.log(notes);
-
+     saveNotes(notes);
 } 
 
 const saveNotes = (notes) => {
-    const dataJSON = JSON.stringifyn(otes)
+    const dataJSON = JSON.stringify(notes);
+    fs.writeFileSync('notes.json', dataJSON);
 }
 
 const loadNotes = () =>{

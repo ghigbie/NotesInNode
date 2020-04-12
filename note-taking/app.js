@@ -25,10 +25,7 @@ yargs.command({
             type: 'string'
         }
     },
-    handler: (argv) => {
-        console.log('Adding note');
-        console.log(`Title: ${argv.title}`);
-        console.log(`Note body: ${argv.body}`);        
+    handler: (argv) => {     
         notes.addNote(argv.title, argv.body);
     }
 });
@@ -58,3 +55,7 @@ yargs.command({
     describe: "Lists all notes by title",
     handler: () => console.log("Listing all notes"),
 });
+
+
+console.log(yargs.argv);
+console.log(process.argv);

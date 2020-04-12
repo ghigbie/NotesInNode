@@ -4,7 +4,7 @@ const message = "Yo! NodeJS is awesome!!!";
 const add = (a, b) => a+b;
 
 const green = chalk.green.bold.bgBlue;
-const red = chalk.red.bold.bgYellow;
+const red = chalk.red.bold;
 const blue = chalk.blue.bold;
 
 module.exports = {
